@@ -1,3 +1,7 @@
 # harrastuslista
 
-Käyttäjä voi lisätä itsensä seuraan, joka edustaa jotain harrastusta. Harrastuksilla voi olla monia seuroja ja käyttäjä voi kuulua moneen seuraan. Sovelluksessa tulee olemaan enemmänkin tauluja.
+Aineopintojen harjoitustyö: tietokantasovellus -kurssia varten tehty tietokantasovellus. 
+
+## Aihekuvaus
+
+Käyttäjä voi lisätä itsensä seuraan, joka edustaa jotakin harrastusta. Käyttäjä voi kuulua moneen eri seuraan samaan aikaan. Käyttäjään tai harrastuksiin voisi liittyä muitakin tauluja.
