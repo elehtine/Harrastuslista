@@ -1,15 +1,23 @@
 from application import app, db
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from application.clubs.models import Club
 
-@app.route("/clubs/", methods=["GET"])
+@app.route("/clubs", methods=["GET"])
 def clubs_index():
     return render_template("clubs/list.html", clubs = Club.query.all())
 
 @app.route("/clubs/new/")
 def clubs_form():
-    print("/clubs/new/")
     return render_template("clubs/new.html")
+
+@app.route("/clubs/<club_id>/", methods=["POST"])
+def clubs_set_name(club_id):
+    club = Club.query.get(club_id)
+    club.name = request.form.get("name")
+
+    db.session().commit()
+
+    return redirect(url_for("clubs_index"))
 
 @app.route("/clubs/", methods=["POST"])
 def clubs_create():
@@ -19,4 +27,4 @@ def clubs_create():
     db.session().add(club)
     db.session().commit()
   
-    return redirect(url_for("tasks_index"))
+    return redirect(url_for("clubs_index"))

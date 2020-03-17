@@ -4,11 +4,18 @@
     <tr>
       <th>Nimi</th>
       <th>Harrastus</th>
+      <th></th>
     </tr>
     {% for club in clubs %}
       <tr>
         <td>{{ club.name }}</td>
         <td>{{ club.hobby }}</td>
+        <td>
+          <form method="POST" action={{ url_for("clubs_set_name", club_id=club.id) }}>
+            <input type="text" name="name"/>
+            <input type="submit" value="Change name"/>
+          </form>
+        </td>
       </tr>
     {% endfor %}
   </table>
