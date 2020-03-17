@@ -2,8 +2,14 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('clubs_create') }}">
-  <input type="text" name="name"/>
-  <input type="text" name="hobby"/>
-  <input type="submit" value="Add a new task"/>
+  <div>
+    Seuran nimi:
+    <input type="text" name="name"/>
+  </div>
+  <div>
+    Lajin nimi:
+    <input type="text" name="hobby"/>
+  </div>
+  <input type="submit" value="Add a new club"/>
 </form>
 {% endblock %}
