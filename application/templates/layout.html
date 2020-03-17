@@ -6,6 +6,10 @@
   </head>
 
   <body>
+    <ul>
+      <li><a href={{ url_for("clubs_index") }}>List clubs</a></li>
+      <li><a href={{ url_for("clubs_form") }}>Add a club</a></li>
+    </ul>
     {% block body %}
       <p>Content</p>
     {% endblock %}
