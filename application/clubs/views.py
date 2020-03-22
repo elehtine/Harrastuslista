@@ -1,6 +1,8 @@
-from application import app, db
 from flask import redirect, render_template, request, url_for
+
+from application import app, db
 from application.clubs.models import Club
+from application.clubs.forms import ClubForm
 
 @app.route("/clubs", methods=["GET"])
 def clubs_index():
@@ -8,7 +10,7 @@ def clubs_index():
 
 @app.route("/clubs/new/")
 def clubs_form():
-    return render_template("clubs/new.html")
+    return render_template("clubs/new.html", form = ClubForm())
 
 @app.route("/clubs/<club_id>/", methods=["POST"])
 def clubs_set_name(club_id):
@@ -21,8 +23,12 @@ def clubs_set_name(club_id):
 
 @app.route("/clubs/", methods=["POST"])
 def clubs_create():
-    f = request.form
-    club = Club(f.get("name"), f.get("hobby"))
+    form = ClubForm(request.form)
+
+    if not form.validate():
+        return render_template("clubs/new.html", form = form)
+
+    club = Club(form.name.data, form.hobby.data)
 
     db.session().add(club)
     db.session().commit()
