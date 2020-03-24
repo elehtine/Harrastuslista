@@ -4,7 +4,11 @@ Aineopintojen harjoitustyö: tietokantasovellus -kurssia varten tehty tietokanta
 
 ## Aihekuvaus
 
-Käyttäjä voi lisätä itsensä seuraan, joka edustaa jotakin harrastusta. Käyttäjä voi kuulua moneen eri seuraan samaan aikaan. Käyttäjään tai harrastuksiin tulee liittymään muitakin tauluja. Alustavat taulut näkyy tiedostossa [tietokantakaavio](https://github.com/elehtine/harrastuslista/blob/master/documentation/tietokantakaavio.md).
+Sovelluksessa on käyttäjiä, seuroja ja harrastusvälineitä. Jokainen käyttäjä voi kuulua seuroihin ja omistaa harrastusvälineitä. Tietokantakaavio on tiedostossa [tietokantakaavio](https://github.com/elehtine/harrastuslista/blob/master/documentation/tietokantakaavio.md).
+
+## User Storyt
+
+User storyt ovat tiedostossa [user-stories](https://github.com/elehtine/harrastuslista/blob/master/documentation/user-stories.md).
 
 ## Heroku
 
