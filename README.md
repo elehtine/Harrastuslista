@@ -14,3 +14,7 @@ User storyt ovat tiedostossa [user-stories](https://github.com/elehtine/harrastu
 ## Heroku
 
 Projektin voi avata Herokussa osoitteesta [harrastuslista.herokuapp.com](https://harrastuslista.herokuapp.com/)
+
+## Käyttäjät
+
+Sovellukseen ei voi vielä tehdä omaa käyttäjää, vaikka toiminnot vaativatkin kirjautumista. Testikäyttäjän käyttäjätunnus on `testing` ja salasana on `test`.
