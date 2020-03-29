@@ -40,3 +40,15 @@ def auth_signin():
 def auth_logout():
     logout_user()
     return redirect(url_for("index"))
+
+@app.route("/user", methods=["GET"])
+def users_index():
+    return render_template("auth/list.html", users = User.query.all())
+
+
+@app.route("/user/<user_id>/", methods=["GET"])
+def user_page(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return redirect(url_for("index"))
+    return render_template("auth/user.html", user = user)

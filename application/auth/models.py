@@ -1,20 +1,15 @@
 from application import db
+from application.models import Base
 
-class User(db.Model):
-
+class User(Base):
     __tablename__ = "account"
-
-    id = db.Column(db.Integer, primary_key=True)
-
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-            onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
 
     clubs = db.relationship("Club", backref='account', lazy=True)
+    clubs = db.relationship("Equipment", backref='account', lazy=True)
 
     def __init__(self, name, username, password):
         self.name = name
@@ -32,3 +27,11 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+class Equipment(Base):
+    name = db.Column(db.String(144), nullable=False)
+
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+
+    def __init__(self, name):
+        self.name = name
