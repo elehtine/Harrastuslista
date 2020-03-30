@@ -1,6 +1,8 @@
 from application import db
 from application.models import Base
 
+from sqlalchemy.sql import text
+
 class User(Base):
     __tablename__ = "account"
 
@@ -27,3 +29,13 @@ class User(Base):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def find_club_leaders():
+        stmt = text("SELECT Account.id, Account.name FROM Account, Club"
+                    " WHERE Club.leader_id = Account.id"
+                    " GROUP BY Account.id")
+        res = db.engine.execute(stmt)
+
+        response = [ { "id": row[0], "name": row[1] } for row in res ]
+        return response

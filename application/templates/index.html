@@ -1,7 +1,22 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  <h1>Main Page</h1>
   <p>
-    Hello world!
+  Hello world!
   </p>
+  <h2>Club Leaders</h2>
+  {% if not leaders %}
+    <p>There is no club leaders</p>
+  {% else %}
+    <ul>
+      {% for leader in leaders %}
+        <li>
+          <a href={{ url_for("user_page", user_id=leader.id) }}>
+            {{ leader.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}
