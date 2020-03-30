@@ -1,22 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
-  <table>
-    <tr>
-      <th>Nimi</th>
-      <th>Harrastus</th>
-      <th></th>
-    </tr>
-    {% for club in clubs %}
+  <table class="table">
+    <thead>
       <tr>
-        <td>{{ club.name }}</td>
-        <td>{{ club.hobby }}</td>
-        <td>
-          <form method="POST" action={{ url_for("clubs_set_name", club_id=club.id) }}>
-            <input type="text" name="name"/>
-            <input type="submit" value="Change name"/>
-          </form>
-        </td>
+        <th>Nimi</th>
+        <th>Harrastus</th>
+        <th>Johtaja</th>
       </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+      {% for club in clubs %}
+        <tr>
+          <td>{{ club.name }}</td>
+          <td>{{ club.leader_id }}</td>
+          <td><a href={{ url_for("user_page", user_id=club.leader_id) }}>{{ club.get_leader().name }}</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 {% endblock %}
