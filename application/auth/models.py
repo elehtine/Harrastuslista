@@ -9,7 +9,7 @@ class User(Base):
     password = db.Column(db.String(144), nullable=False)
 
     clubs = db.relationship("Club", backref='account', lazy=True)
-    clubs = db.relationship("Equipment", backref='account', lazy=True)
+    equipments = db.relationship("Equipment", backref='account', lazy=True)
 
     def __init__(self, name, username, password):
         self.name = name
@@ -27,11 +27,3 @@ class User(Base):
 
     def is_authenticated(self):
         return True
-
-class Equipment(Base):
-    name = db.Column(db.String(144), nullable=False)
-
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
-
-    def __init__(self, name):
-        self.name = name

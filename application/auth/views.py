@@ -5,6 +5,8 @@ from application import app, db
 from application.auth.models import User
 from application.auth.forms import LoginForm, SigninForm
 
+from application.equipments.forms import EquipmentForm
+
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
     if request.method == "GET":
@@ -51,4 +53,4 @@ def user_page(user_id):
     user = User.query.get(user_id)
     if not user:
         return redirect(url_for("index"))
-    return render_template("auth/user.html", user = user)
+    return render_template("auth/user.html", user = user, form=EquipmentForm())

@@ -3,5 +3,33 @@
 <div>
   <h1>{{ user.username }}</h1>
   <h2>{{ user.name }}</h2>
+  {% if current_user.is_authenticated and current_user.id == user.id %}
+    <p>This is your user page</p>
+    <form method="POST" action="{{ url_for('equipment_add') }}">
+      <table>
+        <tr>
+          <td>
+            {{ form.name.label }}
+          </td>
+          <td>
+            {{ form.name }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" value="Add equipment">
+          </td>
+        </tr>
+      </table>
+    </form>
+  {% else %}
+    <p>This is not your user page. In future you will be able add friends</p>
+  {% endif %}
+  <h3>Equipments</h3>
+  <ul>
+    {% for e in user.equipments %}
+      <li>{{ e.name }}</li>
+    {% endfor %}
+  </ul>
 </div>
 {% endblock %}
