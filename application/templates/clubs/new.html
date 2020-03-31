@@ -2,37 +2,28 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('clubs_create') }}">
-  <table>
-    <tr>
-      <td>
-        {{ form.name.label }}
-      </td>
-      <td>
-        {{ form.name }}
-      </td>
-      <td>
+    <div class="form-group">
+      <label for="clubName">{{ form.name.label }}</label>
+      {{ form.name(class="form-control", id="clubName") }}
+      <small class="form-text text-muted">
         <ul>
           {% for error in form.name.errors %}
             <li>{{ error }}</li>
           {% endfor %}
         </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.hobby.label }}
-      </td>
-      <td>
-        {{ form.hobby }}
-      </td>
-      <td>
-      </td>
-    </tr>
-    <tr>
-      <td colspan=3>
-        <input type="submit" value="Add a new club"/>
-      </td>
-    </tr>
-  </table>
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="clubHobby">{{ form.hobby.label }}</label>
+      {{ form.hobby(class="form-control", id="clubHobby") }}
+      <small class="form-text text-muted">
+        <ul>
+          {% for error in form.name.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </small>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add a new club"/>
 </form>
 {% endblock %}

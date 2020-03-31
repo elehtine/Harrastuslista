@@ -12,7 +12,7 @@
       {% for club in clubs %}
         <tr>
           <td>{{ club.name }}</td>
-          <td>{{ club.leader_id }}</td>
+          <td>{{ club.hobby }}</td>
           <td><a href={{ url_for("user_page", user_id=club.leader_id) }}>{{ club.get_leader().name }}</a></td>
         </tr>
       {% endfor %}
