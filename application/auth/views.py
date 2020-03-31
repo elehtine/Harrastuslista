@@ -2,8 +2,8 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
 
 from application import app, db
-from application.auth.models import User
-from application.auth.forms import LoginForm, SigninForm
+from application.auth.models import User, GENDERS
+from application.auth.forms import LoginForm, SigninForm, OptionsForm
 
 from application.equipments.forms import EquipmentForm
 
@@ -20,7 +20,7 @@ def auth_login():
     user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
     if not user:
         return render_template("auth/loginform.html", form = form,
-                               error = "No such username or password")
+                error = "No such username or password")
 
     login_user(user)
     return redirect(url_for("index"))    
@@ -57,4 +57,32 @@ def user_page(user_id):
     user = User.query.get(user_id)
     if not user:
         return redirect(url_for("index"))
-    return render_template("auth/user.html", user = user, form = EquipmentForm())
+
+    return render_template("auth/user.html",
+            user = user,
+            equipmentForm = EquipmentForm(),
+            optionsForm = OptionsForm()
+            )
+
+@app.route("/user/<user_id>/", methods=["POST"])
+def user_options(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return redirect(url_for("index"))
+
+    form = OptionsForm(request.form)
+
+    if not form.validate():
+        return render_template("auth/user.html",
+                user = user,
+                equipmentForm = EquipmentForm(),
+                optionsForm = form
+                )
+
+    user.name = form.name.data
+    user.age = form.age.data
+    user.gender = form.gender.data
+
+    db.session().commit()
+
+    return redirect(url_for("user_page", user_id = user.id))
