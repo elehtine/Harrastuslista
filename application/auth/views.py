@@ -14,6 +14,9 @@ def auth_login():
 
     form = LoginForm(request.form)
 
+    if not form.validate():
+        return render_template("auth/loginform.html", form = form)
+
     user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
     if not user:
         return render_template("auth/loginform.html", form = form,
@@ -27,9 +30,10 @@ def auth_signin():
     if request.method == "GET":
         return render_template("auth/signinform.html", form = SigninForm())
 
-    print("POST - /auth/signin")
     form = SigninForm(request.form)
-    print("form: ", form)
+    if not form.validate():
+        return render_template("auth/signinform.html", form = form)
+
     user = User(form.name.data, form.username.data, form.password.data)
 
     db.session().add(user)
@@ -53,4 +57,4 @@ def user_page(user_id):
     user = User.query.get(user_id)
     if not user:
         return redirect(url_for("index"))
-    return render_template("auth/user.html", user = user, form=EquipmentForm())
+    return render_template("auth/user.html", user = user, form = EquipmentForm())

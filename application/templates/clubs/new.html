@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
-  
+
 {% block body %}
-<form method="POST" action="{{ url_for('clubs_create') }}">
+  <form method="POST" action="{{ url_for('clubs_create') }}">
+    <p>You will be leader of club. Give club name and hobby.</p>
     <div class="form-group">
       <label for="clubName">{{ form.name.label }}</label>
       {{ form.name(class="form-control", id="clubName") }}
@@ -25,5 +26,5 @@
       </small>
     </div>
     <input type="submit" class="btn btn-primary" value="Add a new club"/>
-</form>
+  </form>
 {% endblock %}

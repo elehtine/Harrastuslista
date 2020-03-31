@@ -9,6 +9,8 @@ from application.equipments.forms import EquipmentForm
 @login_required
 def equipment_add():
     form = EquipmentForm(request.form)
+    if not form.validate():
+        return render_template("auth/user.html", user = current_user, form = form)
 
     equipment = Equipment(form.name.data)
     equipment.account_id = current_user.id
