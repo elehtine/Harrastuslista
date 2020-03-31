@@ -9,14 +9,23 @@
   {% if not leaders %}
     <p>There is no club leaders</p>
   {% else %}
-    <ul>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <th>Name</th>
+        <th>Clubs Count</th>
+      </thead>
+      <tbody>
       {% for leader in leaders %}
-        <li>
-          <a href={{ url_for("user_page", user_id=leader.id) }}>
-            {{ leader.name }}
-          </a>
-        </li>
+        <tr>
+          <td>
+            <a href={{ url_for("user_page", user_id=leader.id) }}>
+              {{ leader.name }}
+            </a>
+          </td>
+          <td> {{ leader.clubs }} </td>
+        </tr>
       {% endfor %}
-    </ul>
+      </tbody>
+    </table>
   {% endif %}
 {% endblock %}

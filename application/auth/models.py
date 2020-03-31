@@ -32,10 +32,15 @@ class User(Base):
 
     @staticmethod
     def find_club_leaders():
-        stmt = text("SELECT Account.id, Account.name FROM Account, Club"
-                    " WHERE Club.leader_id = Account.id"
-                    " GROUP BY Account.id")
+        stmt = text("SELECT Account.id, Account.name, COUNT(Club.id)"
+                " FROM Account, Club"
+                " WHERE Club.leader_id = Account.id"
+                " GROUP BY Account.id")
         res = db.engine.execute(stmt)
 
-        response = [ { "id": row[0], "name": row[1] } for row in res ]
+        response = [ {
+            "id": row[0],
+            "name": row[1],
+            "clubs": row[2]
+            } for row in res ]
         return response
