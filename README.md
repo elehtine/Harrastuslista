@@ -17,4 +17,4 @@ Projektin voi avata Herokussa osoitteesta [harrastuslista.herokuapp.com](https:/
 
 ## Käyttäjät
 
-Sovellukseen ei voi vielä tehdä omaa käyttäjää, vaikka toiminnot vaativatkin kirjautumista. Testikäyttäjän käyttäjätunnus on `testing` ja salasana on `test`.
+Sovellukseen voi luoda käyttäjiä. Sovelluksessa on vain yksi käyttäjärooli. Käyttäjä voi lisätä itselleen harrastusvälineitä ja luoda seuran jonka johtajana käyttäjä toimii.
