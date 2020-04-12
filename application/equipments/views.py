@@ -24,3 +24,18 @@ def equipment_add():
     db.session().commit()
 
     return redirect(url_for('user_page', user_id=current_user.id))
+
+@app.route("/equipments/delete/<equipment_id>", methods=["POST"])
+@login_required
+def equipment_delete(equipment_id):
+    equipment = Equipment.query.get(equipment_id)
+
+    if current_user.id != equipment.account_id:
+        return redirect(url_for("user_page", user_id = equipment.account_id))
+
+    db.session().delete(equipment)
+    db.session().commit()
+
+    return redirect(url_for("user_page", user_id = equipment.account_id))
+
+    
