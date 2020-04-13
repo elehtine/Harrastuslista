@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required, current_user
 
 from application import app, db
 from application.auth.models import User, GENDERS
@@ -86,3 +86,23 @@ def user_options(user_id):
     db.session().commit()
 
     return redirect(url_for("user_page", user_id = user.id))
+
+@app.route("/user/<user_id>/follow/<follow_id>/", methods=["POST"])
+@login_required
+def user_follow(user_id, follow_id):
+    user = User.query.get(user_id)
+    if not user:
+        return redirect(url_for("index"))
+
+    if user != current_user:
+        return redirect(url_for("user_page", user_id = user.id))
+
+    followed = User.query.get(follow_id)
+    
+    if not followed:
+        return redirect(url_for("user_page", user_id = user.id))
+
+    user.following.append(followed)
+    db.session.commit()
+
+    return redirect(url_for("user_page", user_id=followed.id))

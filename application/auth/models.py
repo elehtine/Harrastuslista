@@ -5,6 +5,11 @@ from sqlalchemy.sql import text
 
 GENDERS = ('Male', 'Female')
 
+follower_table = db.Table('follower_table',
+        db.Column('followed_id', db.Integer, db.ForeignKey('account.id'), primary_key=True),
+        db.Column('follower_id', db.Integer, db.ForeignKey('account.id'), primary_key=True)
+        )
+
 class User(Base):
     __tablename__ = "account"
 
@@ -17,6 +22,11 @@ class User(Base):
 
     clubs = db.relationship("Club", backref='account', lazy=True)
     equipments = db.relationship("Equipment", backref='account', lazy=True)
+
+    following = db.relationship('User', secondary=follower_table,
+            primaryjoin=("follower_table.c.follower_id == User.id"),
+            secondaryjoin=("follower_table.c.followed_id == User.id"),
+            backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __init__(self, name, username, password):
         self.name = name
