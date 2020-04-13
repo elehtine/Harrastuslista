@@ -29,3 +29,23 @@ def clubs_create():
     db.session().commit()
   
     return redirect(url_for("clubs_index"))
+
+@app.route("/clubs/delete/<club_id>", methods=["POST"])
+@login_required
+def clubs_delete(club_id):
+    club = Club.query.get(club_id)
+
+    if current_user.id != club.leader_id:
+        return redirect(url_for("clubs_index"))
+
+
+    db.session().delete(club)
+    db.session().commit()
+  
+    return redirect(url_for("clubs_index"))
+
+@app.route("/clubs/<club_id>", methods=["GET"])
+def club_page(club_id):
+    club = Club.query.get(club_id)
+    print("Club:\n", club)
+    return render_template("clubs/club.html", club=club)
