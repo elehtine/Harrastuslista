@@ -8,4 +8,17 @@
       <input type="submit" class="btn btn-primary col-2" value="Delete club">
     </form>
   {% endif %}
+  {% if current_user.is_authenticated and current_user in club.members %}
+    Joined to Club
+  {% else %}
+    Join to Club
+    <form class="form-inline" method="POST" action="{{ url_for('club_join', club_id=club.id) }}">
+      <input type="submit" class="btn btn-primary col-2" value="Join Club">
+    </form>
+  {% endif %}
+  <ul>
+    {% for m in club.members %}
+      <li><a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a></li>
+    {% endfor %}
+  </ul>
 {% endblock %}

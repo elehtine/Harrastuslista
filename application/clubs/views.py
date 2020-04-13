@@ -47,5 +47,16 @@ def clubs_delete(club_id):
 @app.route("/clubs/<club_id>", methods=["GET"])
 def club_page(club_id):
     club = Club.query.get(club_id)
-    print("Club:\n", club)
+    return render_template("clubs/club.html", club=club)
+
+@app.route("/clubs/join/<club_id>", methods=["POST"])
+@login_required
+def club_join(club_id):
+    club = Club.query.get(club_id)
+
+    if current_user in club.members:
+        return render_template("clubs/club.html", club=club)
+
+    club.members.append(current_user)
+    db.session().commit()
     return render_template("clubs/club.html", club=club)
