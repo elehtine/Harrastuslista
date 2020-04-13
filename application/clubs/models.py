@@ -14,8 +14,7 @@ class Club(Base):
 
     leader_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
-    members = db.relationship(User, secondary=member_table,
-            backref=db.backref('joined', lazy=True), lazy='dynamic')
+    members = db.relationship('User', secondary=member_table, backref=db.backref('joined', lazy='dynamic'))
 
     def __init__(self, name, hobby):
         self.name = name

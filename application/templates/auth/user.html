@@ -19,8 +19,14 @@
         </tr>
       </tbody>
     </table>
+    <h3>Clubs</h3>
+    <ul>
+      {% for c in user.joined %}
+        <li>{{ c.name }}</li>
+      {% endfor %}
+    </ul>
+    <h3>Equipments</h3>
     {% if current_user.is_authenticated and current_user.id == user.id %}
-      <p>This is your user page</p>
       <div>
         <form class="form-inline" method="POST" action="{{ url_for('equipment_add') }}">
           <label for="equipmentName"{{ equipmentForm.equipment.label }}</label>
@@ -38,7 +44,6 @@
     {% else %}
       <p>This is not your user page. In future you will be able to add friends</p>
     {% endif %}
-    <h3>Equipments</h3>
     <ul>
       {% for e in user.equipments %}
         <li>
