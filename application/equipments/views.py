@@ -17,7 +17,7 @@ def equipment_add():
                 optionsForm = OptionsForm()
                 )
 
-    equipment = Equipment(form.equipment.data)
+        equipment = Equipment(form.equipment.data)
     equipment.account_id = current_user.id
 
     db.session().add(equipment)
@@ -38,4 +38,4 @@ def equipment_delete(equipment_id):
 
     return redirect(url_for("user_page", user_id = equipment.account_id))
 
-    
+

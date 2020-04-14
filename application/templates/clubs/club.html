@@ -16,9 +16,25 @@
       <input type="submit" class="btn btn-primary col-2" value="Join Club">
     </form>
   {% endif %}
+  <h2>Members</h2>
   <ul>
     {% for m in club.members %}
       <li><a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <h2>Messages</h2>
+  {% if current_user.is_authenticated and current_user.id == club.leader_id %}
+    <form class="form-inline" method="POST" action="{{ url_for('message_add', club_id=club.id) }}">
+      <label for="message"{{ messageForm.message.label }}</label>
+      {{ messageForm.message(class="form-control", id="messages") }}
+      <input type="submit" class="btn btn-primary col-2" value="Add message">
+    </form>
+  {% else %}
+    <p><small>Only club leader can add messages</small></p>
+  {% endif %}
+  <ul>
+    {% for m in club.messages %}
+      <li>{{ m.message }}</li>
     {% endfor %}
   </ul>
 {% endblock %}

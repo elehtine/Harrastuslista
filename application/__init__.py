@@ -21,6 +21,9 @@ from application import views
 from application.clubs import models
 from application.clubs import views
   
+from application.messages import models
+from application.messages import views
+
 from application.auth import models
 from application.auth import views
 

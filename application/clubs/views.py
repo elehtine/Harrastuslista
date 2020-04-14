@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from application import app, db
 from application.clubs.models import Club
 from application.clubs.forms import ClubForm
+from application.messages.forms import MessageForm
 
 @app.route("/clubs", methods=["GET"])
 def clubs_index():
@@ -47,7 +48,7 @@ def clubs_delete(club_id):
 @app.route("/clubs/<club_id>", methods=["GET"])
 def club_page(club_id):
     club = Club.query.get(club_id)
-    return render_template("clubs/club.html", club=club)
+    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
 
 @app.route("/clubs/join/<club_id>", methods=["POST"])
 @login_required
@@ -59,4 +60,4 @@ def club_join(club_id):
 
     club.members.append(current_user)
     db.session().commit()
-    return render_template("clubs/club.html", club=club)
+    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
