@@ -8,13 +8,16 @@
       <input type="submit" class="btn btn-primary col-2" value="Delete club">
     </form>
   {% endif %}
-  {% if current_user.is_authenticated and current_user in club.members %}
-    Joined to Club
+  {% if current_user.is_authenticated %}
+    {% if current_user.is_authenticated and current_user in club.members %}
+      Joined to Club
+    {% else %}
+      <form class="form-inline" method="POST" action="{{ url_for('club_join', club_id=club.id) }}">
+        <input type="submit" class="btn btn-primary col-2" value="Join Club">
+      </form>
+    {% endif %}
   {% else %}
-    Join to Club
-    <form class="form-inline" method="POST" action="{{ url_for('club_join', club_id=club.id) }}">
-      <input type="submit" class="btn btn-primary col-2" value="Join Club">
-    </form>
+    <p><small>Only logged users can join clubs</small></p>
   {% endif %}
   <h2>Members</h2>
   <ul>
@@ -35,13 +38,17 @@
   {% if current_user.is_authenticated and (current_user in club.members or current_user.id == club.leader_id) %}
     <ul>
       {% for m in club.messages %}
-        <li>
-          <form class="form-inline" method="POST"
-                                    action="{{ url_for('message_delete', club_id=club.id, message_id=m.id) }}">
-            <p class="col-4">{{ m.message }}</p>
-            <input type="submit" class="btn btn-danger col-2" value="Delete message">
-          </form>
-        </li>
+        {% if current_user.id == club.leader_id %}
+          <li>
+            <form class="form-inline" method="POST"
+                                      action="{{ url_for('message_delete', club_id=club.id, message_id=m.id) }}">
+              <p class="col-4">{{ m.message }}</p>
+              <input type="submit" class="btn btn-danger col-2" value="Delete message">
+            </form>
+          </li>
+        {% else %}
+          <li><p class="col-4">{{ m.message }}</p></li>
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}
