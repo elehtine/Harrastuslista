@@ -32,9 +32,19 @@
   {% else %}
     <p><small>Only club leader can add messages</small></p>
   {% endif %}
-  <ul>
-    {% for m in club.messages %}
-      <li>{{ m.message }}</li>
-    {% endfor %}
-  </ul>
+  {% if current_user.is_authenticated and (current_user in club.members or current_user.id == club.leader_id) %}
+    <ul>
+      {% for m in club.messages %}
+        <li>
+          <form class="form-inline" method="POST"
+                                    action="{{ url_for('message_delete', club_id=club.id, message_id=m.id) }}">
+            <p class="col-4">{{ m.message }}</p>
+            <input type="submit" class="btn btn-danger col-2" value="Delete message">
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p><small>Only club leader and club members can see messages</small></p>
+  {% endif %}
 {% endblock %}

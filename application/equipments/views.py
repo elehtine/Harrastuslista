@@ -17,7 +17,7 @@ def equipment_add():
                 optionsForm = OptionsForm()
                 )
 
-        equipment = Equipment(form.equipment.data)
+    equipment = Equipment(form.equipment.data)
     equipment.account_id = current_user.id
 
     db.session().add(equipment)

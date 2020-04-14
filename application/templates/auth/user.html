@@ -47,7 +47,7 @@
         <li>
           <form class="form-inline" method="POST" action="{{ url_for('equipment_delete', equipment_id=e.id) }}">
             <p class="col-4">{{ e.name }}</p>
-            <input type="submit" class="btn btn-primary col-2" value="Delete equipment">
+            <input type="submit" class="btn btn-danger col-2" value="Delete equipment">
           </form>
         </li>
       {% endfor %}
