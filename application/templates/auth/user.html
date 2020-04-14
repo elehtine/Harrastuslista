@@ -19,6 +19,28 @@
         </tr>
       </tbody>
     </table>
+    {% if current_user.is_authenticated %}
+      {% if current_user.id == user.id %}
+        <h3>Following</h3>
+        <ul>
+          {% for u in user.following %}
+            <li><a href={{ url_for('user_page', user_id=u.id)}}>{{ u.name }}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {% if user in current_user.following %}
+          <p>You are following {{ user.name }}</p>
+        {% else %}
+          <form class="form-inline" method="POST"action="{{
+          url_for('user_follow', user_id=current_user.id, follow_id=user.id)
+          }}">
+            <input type="submit" class="btn btn-primary" value="follow">
+          </form>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      <p>Only logged users can follow</p>
+    {% endif %}
     <h3>Clubs</h3>
     <ul>
       {% for c in user.joined %}
@@ -45,63 +67,55 @@
     <ul>
       {% for e in user.equipments %}
         <li>
-          <form class="form-inline" method="POST" action="{{ url_for('equipment_delete', equipment_id=e.id) }}">
+          {% if current_user.is_authenticated and current_user.id == user.id %}
+            <form class="form-inline" method="POST" action="{{ url_for('equipment_delete', equipment_id=e.id) }}">
+              <p class="col-4">{{ e.name }}</p>
+              <input type="submit" class="btn btn-danger col-2" value="Delete equipment">
+            </form>
+          {% else %}
             <p class="col-4">{{ e.name }}</p>
-            <input type="submit" class="btn btn-danger col-2" value="Delete equipment">
-          </form>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
     {% if current_user.is_authenticated and current_user.id == user.id %}
-      <h3>Following</h3>
-      <ul>
-        {% for u in user.following %}
-          <li>{{ u.name }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      {% if current_user.is_authenticated and user in current_user.following %}
-        <p>You are following {{ user.name }}</p>
-      {% else %}
-        <form class="form-inline" method="POST"action="{{
-        url_for('user_follow', user_id=current_user.id, follow_id=user.id)
-        }}">
-          <input type="submit" class="btn btn-primary" value="follow">
-        </form>
-      {% endif %}
-    {% endif %}
-    {% if current_user.is_authenticated and current_user.id == user.id %}
       <h3>Options</h3>
       <p>You must fill all of the fields</p>
-      <form method="POST" action="{{ url_for('user_options', user_id=current_user.id) }}">
+      <form method="POST" action="{{ url_for('user_change_name', user_id=current_user.id) }}">
         <div class="form-group">
-          <label for="optionName">{{ optionsForm.name.label }}</label>
-          {{ optionsForm.name(id="optionName") }}
+          <label for="optionName">{{ changeNameForm.name.label }}</label>
+          {{ changeNameForm.name(id="optionName") }}
           <small>
             <ul>
-              {% for error in optionsForm.name.errors %}
+              {% for error in changeNameForm.name.errors %}
                 <li>{{ error }}</li>
               {% endfor %}
             </ul>
           </small>
         </div>
+        <input type="submit" class="btn btn-primary" value="Save Changes">
+      </form>
+      <form method="POST" action="{{ url_for('user_change_age', user_id=current_user.id) }}">
         <div class="form-group">
-          <label for="optionAge">{{ optionsForm.age.label }}</label>
-          {{ optionsForm.age(id="optionAge") }}
+          <label for="optionAge">{{ changeAgeForm.age.label }}</label>
+          {{ changeAgeForm.age(id="optionAge") }}
           <small>
             <ul>
-              {% for error in optionsForm.age.errors %}
+              {% for error in changeAgeForm.age.errors %}
                 <li>{{ error }}</li>
               {% endfor %}
             </ul>
           </small>
         </div>
+        <input type="submit" class="btn btn-primary" value="Save Changes">
+      </form>
+      <form method="POST" action="{{ url_for('user_change_gender', user_id=current_user.id) }}">
         <div class="form-group">
-          <label for="optionsGender">{{ optionsForm.gender.label }}</label>
-          {{ optionsForm.gender(id="optionsGender") }}
+          <label for="optionsGender">{{ changeGenderForm.gender.label }}</label>
+          {{ changeGenderForm.gender(id="optionsGender") }}
           <small>
             <ul>
-              {% for error in optionsForm.gender.errors %}
+              {% for error in changeGenderForm.gender.errors %}
                 <li>{{ error }}</li>
               {% endfor %}
             </ul>
