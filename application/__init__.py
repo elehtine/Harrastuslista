@@ -26,6 +26,7 @@ from application.messages import views
 
 from application.auth import models
 from application.auth import views
+from application.user import views
 
 from application.equipments import models
 from application.equipments import views

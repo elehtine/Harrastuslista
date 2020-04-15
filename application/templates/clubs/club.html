@@ -5,7 +5,7 @@
   {% if current_user.is_authenticated and club.leader_id == current_user.id %}
     <p>You are leader of this club</p>
     <form class="form-inline" method="POST" action="{{ url_for('clubs_delete', club_id=club.id) }}">
-      <input type="submit" class="btn btn-primary col-2" value="Delete club">
+      <input type="submit" class="btn btn-danger col-2" value="Delete club">
     </form>
   {% endif %}
   {% if current_user.is_authenticated %}

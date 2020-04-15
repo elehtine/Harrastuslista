@@ -85,6 +85,7 @@
         <div class="form-group">
           <label for="optionName">{{ changeNameForm.name.label }}</label>
           {{ changeNameForm.name(id="optionName") }}
+          <input type="submit" class="btn btn-primary" value="Change Name">
           <small>
             <ul>
               {% for error in changeNameForm.name.errors %}
@@ -93,12 +94,12 @@
             </ul>
           </small>
         </div>
-        <input type="submit" class="btn btn-primary" value="Save Changes">
       </form>
       <form method="POST" action="{{ url_for('user_change_age', user_id=current_user.id) }}">
         <div class="form-group">
           <label for="optionAge">{{ changeAgeForm.age.label }}</label>
           {{ changeAgeForm.age(id="optionAge") }}
+          <input type="submit" class="btn btn-primary" value="Set Age">
           <small>
             <ul>
               {% for error in changeAgeForm.age.errors %}
@@ -107,12 +108,12 @@
             </ul>
           </small>
         </div>
-        <input type="submit" class="btn btn-primary" value="Save Changes">
       </form>
       <form method="POST" action="{{ url_for('user_change_gender', user_id=current_user.id) }}">
         <div class="form-group">
           <label for="optionsGender">{{ changeGenderForm.gender.label }}</label>
           {{ changeGenderForm.gender(id="optionsGender") }}
+          <input type="submit" class="btn btn-primary" value="Set Gender">
           <small>
             <ul>
               {% for error in changeGenderForm.gender.errors %}
@@ -121,7 +122,6 @@
             </ul>
           </small>
         </div>
-        <input type="submit" class="btn btn-primary" value="Save Changes">
       </form>
     {% endif %}
   </div>
