@@ -18,3 +18,8 @@ Projektin voi avata Herokussa osoitteesta [harrastuslista.herokuapp.com](https:/
 ## Käyttäjät
 
 Sovellukseen voi luoda käyttäjiä. Sovelluksessa on vain yksi käyttäjärooli. Käyttäjä voi lisätä itselleen harrastusvälineitä ja luoda seuran jonka johtajana käyttäjä toimii.
+
+## Asennusohjeet
+Voit käyttää ohjelmaa herokun kautta. Voit ladata projektin myös omalle koneellesi. Kun projektikansio on koneellasi ja olet komentorivillä kyseisessä kansiossa, luo Python-virtuaaliympäristö komennolla `python3 -m venv venv`. Nyt saat asennettua riippuvuudet projektiin komennolla `pip install -r requirements.txt`. Nyt sovelluksen pitäisi käynnistyä komennolla `python3 run.py`.
+
+Kun avaat projektin seuraavan kerran sinun pitää vain aktivoida Python-virtuaaliympäristö oikesta kansiosta komennolla `source venv/bin/activate` ja voit käynnistää sovelluksen taas komennolla `python3 run.py`.
