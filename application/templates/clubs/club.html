@@ -4,13 +4,12 @@
   <h2>{{ club.hobby }}</h2>
   {% if current_user.is_authenticated and club.leader_id == current_user.id %}
     <p>You are leader of this club</p>
-    <form class="form-inline" method="POST" action="{{ url_for('clubs_delete', club_id=club.id) }}">
-      <input type="submit" class="btn btn-danger col-2" value="Delete club">
-    </form>
   {% endif %}
   {% if current_user.is_authenticated %}
     {% if current_user.is_authenticated and current_user in club.members %}
-      Joined to Club
+      <form class="form-inline" method="POST" action="{{ url_for('club_exit', club_id=club.id) }}">
+        <input type="submit" class="btn btn-danger col-2" value="Exit Club">
+      </form>
     {% else %}
       <form class="form-inline" method="POST" action="{{ url_for('club_join', club_id=club.id) }}">
         <input type="submit" class="btn btn-primary col-2" value="Join Club">
@@ -22,7 +21,20 @@
   <h2>Members</h2>
   <ul>
     {% for m in club.members %}
-      <li><a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a></li>
+      {% if current_user.is_authenticated and club.leader_id == current_user.id %}
+        <li>
+          <form class="form-inline" method="POST" action="{{
+          url_for('club_kick', club_id=club.id, user_id = m.id)
+          }}">
+          <a href={{ url_for("user_page", user_id=m.id) }} class="col-4">{{ m.name }}</a>
+            <input type="submit" class="btn btn-danger col-2" value="Remove User">
+          </form>
+        </li>
+      {% else %}
+        <li>
+          <a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a>
+        </li>
+      {% endif %}
     {% endfor %}
   </ul>
   <h2>Messages</h2>
@@ -53,5 +65,10 @@
     </ul>
   {% else %}
     <p><small>Only club leader and club members can see messages</small></p>
+  {% endif %}
+  {% if current_user.is_authenticated and club.leader_id == current_user.id %}
+    <form class="form-inline" method="POST" action="{{ url_for('clubs_delete', club_id=club.id) }}">
+      <input type="submit" class="btn btn-danger col-2" value="Delete club">
+    </form>
   {% endif %}
 {% endblock %}

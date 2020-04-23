@@ -6,6 +6,8 @@ from application.clubs.models import Club
 from application.clubs.forms import ClubForm
 from application.messages.forms import MessageForm
 
+from application.auth.models import User
+
 @app.route("/clubs", methods=["GET"])
 def clubs_index():
     return render_template("clubs/list.html", clubs = Club.query.all())
@@ -59,5 +61,29 @@ def club_join(club_id):
         return render_template("clubs/club.html", club=club)
 
     club.members.append(current_user)
+    db.session().commit()
+    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+
+@app.route("/clubs/exit/<club_id>", methods=["POST"])
+@login_required
+def club_exit(club_id):
+    club = Club.query.get(club_id)
+
+    if current_user not in club.members:
+        return render_template("clubs/club.html", club=club)
+
+    club.members.remove(current_user)
+    db.session().commit()
+    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+
+@app.route("/clubs/<club_id>/kick/<user_id>", methods=["POST"])
+@login_required
+def club_kick(club_id, user_id):
+    club = Club.query.get(club_id)
+    user = User.query.get(user_id)
+    if user not in club.members:
+        return render_template("clubs/club.html", club=club)
+
+    club.members.remove(user)
     db.session().commit()
     return render_template("clubs/club.html", club=club, messageForm=MessageForm())
