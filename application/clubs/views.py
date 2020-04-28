@@ -41,6 +41,9 @@ def clubs_delete(club_id):
     if current_user.id != club.leader_id:
         return redirect(url_for("clubs_index"))
 
+    club.members.clear()
+    club.messages.clear()
+
 
     db.session().delete(club)
     db.session().commit()
