@@ -60,3 +60,18 @@ class User(Base):
             "clubs": row[2]
             } for row in res ]
         return response
+
+    @staticmethod
+    def find_user_equipments():
+        stmt = text("SELECT Account.id, Account.name, COUNT(Equipment.id)"
+                " FROM Account, Equipment"
+                " WHERE Equipment.account_id = Account.id"
+                " GROUP BY Account.id")
+        res = db.engine.execute(stmt)
+
+        response = [ {
+            "id": row[0],
+            "name": row[1],
+            "equipments": row[2]
+            } for row in res ]
+        return response

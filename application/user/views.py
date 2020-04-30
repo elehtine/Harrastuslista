@@ -10,7 +10,7 @@ from application.equipments.forms import EquipmentForm
 
 @app.route("/user", methods=["GET"])
 def users_index():
-    return render_template("user/list.html", users = User.query.all())
+    return render_template("user/list.html", users = User.find_user_equipments())
 
 @app.route("/user/<user_id>/", methods=["GET"])
 def user_page(user_id):
