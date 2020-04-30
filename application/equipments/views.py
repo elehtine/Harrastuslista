@@ -20,7 +20,7 @@ def equipment_add():
 
     return redirect(url_for('user_page', user_id=current_user.id))
 
-@app.route("/equipments/delete/<equipment_id>", methods=["POST"])
+@app.route("/equipments/<equipment_id>/delete", methods=["POST"])
 @login_required
 def equipment_delete(equipment_id):
     equipment = Equipment.query.get(equipment_id)

@@ -26,7 +26,7 @@ def user_page(user_id):
             changeGenderForm=ChangeGenderForm()
             )
 
-@app.route("/user/update/name/<user_id>/", methods=["POST"])
+@app.route("/user/<user_id>/update/name", methods=["POST"])
 @login_required
 def user_change_name(user_id):
     user = User.query.get(user_id)
@@ -47,7 +47,7 @@ def user_change_name(user_id):
     db.session().commit()
     return redirect(url_for("user_page", user_id = user.id))
 
-@app.route("/user/update/age/<user_id>/", methods=["POST"])
+@app.route("/user/<user_id>/update/age", methods=["POST"])
 @login_required
 def user_change_age(user_id):
     user = User.query.get(user_id)
@@ -68,7 +68,7 @@ def user_change_age(user_id):
     db.session().commit()
     return redirect(url_for("user_page", user_id = user.id))
 
-@app.route("/user/update/gender/<user_id>/", methods=["POST"])
+@app.route("/user/<user_id>/update/gender", methods=["POST"])
 @login_required
 def user_change_gender(user_id):
     user = User.query.get(user_id)

@@ -33,7 +33,7 @@ def clubs_create():
   
     return redirect(url_for("clubs_index"))
 
-@app.route("/clubs/delete/<club_id>", methods=["POST"])
+@app.route("/clubs/<club_id>/delete", methods=["POST"])
 @login_required
 def clubs_delete(club_id):
     club = Club.query.get(club_id)
@@ -55,7 +55,7 @@ def club_page(club_id):
             clubHobbyForm=ChangeClubHobbyForm()
             )
 
-@app.route("/clubs/join/<club_id>", methods=["POST"])
+@app.route("/clubs/<club_id>/join", methods=["POST"])
 @login_required
 def club_join(club_id):
     club = Club.query.get(club_id)
@@ -75,7 +75,7 @@ def club_join(club_id):
             clubHobbyForm=ChangeClubHobbyForm()
             )
 
-@app.route("/clubs/exit/<club_id>", methods=["POST"])
+@app.route("/clubs/<club_id>/exit", methods=["POST"])
 @login_required
 def club_exit(club_id):
     club = Club.query.get(club_id)
@@ -109,8 +109,6 @@ def club_kick(club_id, user_id):
 
     club.members.remove(user)
     db.session().commit()
-    print("--------------------------------------")
-    print(club.members)
     return redirect(url_for("club_page", club_id=club.id))
 
 @app.route("/clubs/<club_id>/update/name", methods=["POST"])
