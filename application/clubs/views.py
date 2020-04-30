@@ -12,12 +12,12 @@ from application.auth.models import User
 def clubs_index():
     return render_template("clubs/list.html", clubs = Club.query.all())
 
-@app.route("/clubs/new/")
+@app.route("/clubs/new")
 @login_required
 def clubs_form():
     return render_template("clubs/new.html", form = ClubForm())
 
-@app.route("/clubs/", methods=["POST"])
+@app.route("/clubs", methods=["POST"])
 @login_required
 def clubs_create():
     form = ClubForm(request.form)

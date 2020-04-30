@@ -113,6 +113,7 @@
       </div>
       <input type="submit" class="btn btn-primary" value="Change Club Hobby"/>
     </form>
+    <p>Cannot delete club with messages</p>
     <form class="form-inline" method="POST" action="{{ url_for('clubs_delete', club_id=club.id) }}">
       <input type="submit" class="btn btn-danger col-2" value="Delete club">
     </form>
