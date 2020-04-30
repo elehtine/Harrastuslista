@@ -44,7 +44,7 @@
       <p>Club has no members</p>
     {% endif %}
   {% else %}
-    {% for m in club.find_members_equipments(club.id) %}
+    {% for m in club.members %}
       <ul>
         <li>
           <a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a>
