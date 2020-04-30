@@ -11,6 +11,7 @@ Käyttäjä voi vaihtaa tietojaan (nimi, ikä, sukupuoli) omalla sivulla. Lisäk
 ## Seuran sivu
 Seuran sivulla johtaja voi poistaa seuran, lisätä siihen ilmoituksia, tarkastella jäseniä ja tietenkin liittyä seuraan. Seuran johtajan ei ole pakko olla itse seurassa.
 Muut näkevät seuran ilmoitukset ja jäsenet ja voivat liittyä seuraan.
+Ikävä kyllä seuran poistaminen aiheuttaa virheen jos siinä on viestejä.
 
 ## Listat
 Sovelluksessa on valikko käyttäjien ja seurojen listaamiseen. Näin helpottuu tiettyjen seurojen ja käyttäjien etsiminen.
