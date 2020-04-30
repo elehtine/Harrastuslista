@@ -19,7 +19,7 @@ class Club(Base):
     members = db.relationship('User', secondary=member_table,
             backref=db.backref('joined', lazy='dynamic'))
 
-    messages = db.relationship("Message", backref='account', lazy=True)
+    messages = db.relationship("Message", backref='account', lazy='dynamic')
 
     def __init__(self, name, hobby):
         self.name = name
