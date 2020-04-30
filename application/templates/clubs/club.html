@@ -18,25 +18,41 @@
   {% else %}
     <p><small>Only logged users can join clubs</small></p>
   {% endif %}
+
   <h2>Members</h2>
-  <ul>
-    {% for m in club.members %}
-      {% if current_user.is_authenticated and club.leader_id == current_user.id %}
-        <li>
-          <form class="form-inline" method="POST" action="{{
-          url_for('club_kick', club_id=club.id, user_id = m.id)
-          }}">
-          <a href={{ url_for("user_page", user_id=m.id) }} class="col-4">{{ m.name }}</a>
-            <input type="submit" class="btn btn-danger col-2" value="Remove User">
-          </form>
-        </li>
-      {% else %}
+  {% if current_user.is_authenticated and club.leader_id == current_user.id %}
+    {% if club.members %}
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th></th>
+        </tr>
+        {% for m in club.members %}
+          <tr>
+            <td>
+              <a href={{ url_for("user_page", user_id=m.id) }} class="col-4">{{ m.name }}</a>
+            </td>
+            <td><form class="form-inline" method="POST" action="{{
+            url_for('club_kick', club_id=club.id, user_id = m.id)
+            }}">
+                <input type="submit" class="btn btn-danger" value="Remove User">
+              </form>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>Club has no members</p>
+    {% endif %}
+  {% else %}
+    {% for m in club.find_members_equipments(club.id) %}
+      <ul>
         <li>
           <a href={{ url_for("user_page", user_id=m.id) }}>{{ m.name }}</a>
         </li>
-      {% endif %}
+      </ul>
     {% endfor %}
-  </ul>
+  {% endif %}
+
   <h2>Messages</h2>
   {% if current_user.is_authenticated and current_user.id == club.leader_id %}
     <form class="form-inline" method="POST" action="{{ url_for('message_add', club_id=club.id) }}">
@@ -66,7 +82,37 @@
   {% else %}
     <p><small>Only club leader and club members can see messages</small></p>
   {% endif %}
+
   {% if current_user.is_authenticated and club.leader_id == current_user.id %}
+    <h2>Settings</h2>
+    <form method="POST" action="{{ url_for('change_club_name', club_id=club.id) }}">
+      <div class="form-group">
+        <label for="clubName">{{ clubNameForm.name.label }}</label>
+        {{ clubNameForm.name(class="form-control", id="clubName") }}
+        <small class="form-text text-muted">
+          <ul>
+            {% for error in clubNameForm.name.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </small>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Change Club Name"/>
+    </form>
+    <form method="POST" action="{{ url_for('change_club_hobby', club_id=club.id) }}">
+      <div class="form-group">
+        <label for="clubName">{{ clubHobbyForm.hobby.label }}</label>
+        {{ clubHobbyForm.hobby(class="form-control", id="clubHobby") }}
+        <small class="form-text text-muted">
+          <ul>
+            {% for error in clubHobbyForm.hobby.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </small>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Change Club Hobby"/>
+    </form>
     <form class="form-inline" method="POST" action="{{ url_for('clubs_delete', club_id=club.id) }}">
       <input type="submit" class="btn btn-danger col-2" value="Delete club">
     </form>

@@ -80,7 +80,6 @@
     </ul>
     {% if current_user.is_authenticated and current_user.id == user.id %}
       <h3>Options</h3>
-      <p>You must fill all of the fields</p>
       <form method="POST" action="{{ url_for('user_change_name', user_id=current_user.id) }}">
         <div class="form-group">
           <label for="optionName">{{ changeNameForm.name.label }}</label>

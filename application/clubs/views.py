@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.clubs.models import Club
-from application.clubs.forms import ClubForm
+from application.clubs.forms import ClubForm, ChangeClubNameForm, ChangeClubHobbyForm
 from application.messages.forms import MessageForm
 
 from application.auth.models import User
@@ -41,10 +41,6 @@ def clubs_delete(club_id):
     if current_user.id != club.leader_id:
         return redirect(url_for("clubs_index"))
 
-    club.members.clear()
-    club.messages.clear()
-
-
     db.session().delete(club)
     db.session().commit()
   
@@ -53,7 +49,11 @@ def clubs_delete(club_id):
 @app.route("/clubs/<club_id>", methods=["GET"])
 def club_page(club_id):
     club = Club.query.get(club_id)
-    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+    return render_template("clubs/club.html", club=club,
+            messageForm=MessageForm(),
+            clubNameForm=ChangeClubNameForm(),
+            clubHobbyForm=ChangeClubHobbyForm()
+            )
 
 @app.route("/clubs/join/<club_id>", methods=["POST"])
 @login_required
@@ -61,11 +61,19 @@ def club_join(club_id):
     club = Club.query.get(club_id)
 
     if current_user in club.members:
-        return render_template("clubs/club.html", club=club)
+        return render_template("clubs/club.html", club=club,
+                messageForm=MessageForm(),
+                clubNameForm=ChangeClubNameForm(),
+                clubHobbyForm=ChangeClubHobbyForm()
+                )
 
     club.members.append(current_user)
     db.session().commit()
-    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+    return render_template("clubs/club.html", club=club,
+            messageForm=MessageForm(),
+            clubNameForm=ChangeClubNameForm(),
+            clubHobbyForm=ChangeClubHobbyForm()
+            )
 
 @app.route("/clubs/exit/<club_id>", methods=["POST"])
 @login_required
@@ -73,11 +81,19 @@ def club_exit(club_id):
     club = Club.query.get(club_id)
 
     if current_user not in club.members:
-        return render_template("clubs/club.html", club=club)
+        return render_template("clubs/club.html", club=club,
+                messageForm=MessageForm(),
+                clubNameForm=ChangeClubNameForm(),
+                clubHobbyForm=ChangeClubHobbyForm()
+                )
 
     club.members.remove(current_user)
     db.session().commit()
-    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+    return render_template("clubs/club.html", club=club,
+            messageForm=MessageForm(),
+            clubNameForm=ChangeClubNameForm(),
+            clubHobbyForm=ChangeClubHobbyForm()
+            )
 
 @app.route("/clubs/<club_id>/kick/<user_id>", methods=["POST"])
 @login_required
@@ -85,8 +101,56 @@ def club_kick(club_id, user_id):
     club = Club.query.get(club_id)
     user = User.query.get(user_id)
     if user not in club.members:
-        return render_template("clubs/club.html", club=club)
+        return render_template("clubs/club.html", club=club,
+                messageForm=MessageForm(),
+                clubNameForm=ChangeClubNameForm(),
+                clubHobbyForm=ChangeClubHobbyForm()
+                )
 
     club.members.remove(user)
     db.session().commit()
-    return render_template("clubs/club.html", club=club, messageForm=MessageForm())
+    print("--------------------------------------")
+    print(club.members)
+    return redirect(url_for("club_page", club_id=club.id))
+
+@app.route("/clubs/<club_id>/update/name", methods=["POST"])
+@login_required
+def change_club_name(club_id):
+    club = Club.query.get(club_id)
+
+    form = ChangeClubNameForm(request.form)
+    if not form.validate():
+        return render_template("clubs/club.html", club=club,
+                messageForm=MessageForm(),
+                clubNameForm=form,
+                clubHobbyForm=ChangeClubHobbyForm()
+                )
+
+    club.name = form.name.data
+    db.session().commit()
+    return render_template("clubs/club.html", club=club,
+            messageForm=MessageForm(),
+            clubNameForm=ChangeClubNameForm(),
+            clubHobbyForm=ChangeClubHobbyForm()
+            )
+
+@app.route("/clubs/<club_id>/update/hobby", methods=["POST"])
+@login_required
+def change_club_hobby(club_id):
+    club = Club.query.get(club_id)
+
+    form = ChangeClubHobbyForm(request.form)
+    if not form.validate():
+        return render_template("clubs/club.html", club=club,
+                messageForm=MessageForm(),
+                clubNameForm=ChangeClubNameForm,
+                clubHobbyForm=form
+                )
+
+    club.hobby = form.hobby.data
+    db.session().commit()
+    return render_template("clubs/club.html", club=club,
+            messageForm=MessageForm(),
+            clubNameForm=ChangeClubNameForm(),
+            clubHobbyForm=ChangeClubHobbyForm()
+            )

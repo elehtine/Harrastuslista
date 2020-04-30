@@ -7,3 +7,15 @@ class ClubForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class ChangeClubNameForm(FlaskForm):
+    name = StringField("Club name", [validators.Length(min=3, max=20)])
+
+    class Meta:
+        csrf = False
+
+class ChangeClubHobbyForm(FlaskForm):
+    hobby = StringField("Club name", [validators.Length(min=3, max=20)])
+
+    class Meta:
+        csrf = False

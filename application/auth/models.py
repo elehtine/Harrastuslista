@@ -45,6 +45,7 @@ class User(Base):
     def is_authenticated(self):
         return True
 
+
     @staticmethod
     def find_club_leaders():
         stmt = text("SELECT Account.id, Account.name, COUNT(Club.id)"
