@@ -2,6 +2,9 @@
 
 Aineopintojen harjoitustyö: tietokantasovellus -kurssia varten tehty tietokantasovellus. 
 
+## käyttöohjeet
+Käyttöohjeet löytyvät tiedostosta [käyttöohje](https://github.com/elehtine/harrastuslista/blob/master/documentation/k%C3%A4ytt%C3%B6ohje.md).
+
 ## Aihekuvaus
 
 Sovelluksella pystytään pitämään kirjaa harrastusseuroista. Käyttäjät voivat tehdä oman seuran jonka johtajana hän toimii. Muut käyttäjät voivat liittyä seuraan. Seuran johtaja voi halutessaan poistaa käyttäjän seurastaan ja tehdä ilmoituksia seuraan liittyen. Jokaisella käyttäjällä on oma lista omistamistaan harrastusvälineistä, jota he voivat hallita itse. Käyttäjät voivat lisätä toisiaan kavereiksi niin he näkevät helpommin toistensa tiedot.
