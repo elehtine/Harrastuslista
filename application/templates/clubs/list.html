@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for club in rows %}
+      {% for club in clubs %}
         <tr>
           <td><a href={{ url_for("club_page", club_id=club.id) }}>{{ club.name }}</a></td>
           <td>{{ club.hobby }}</td>
