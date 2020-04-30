@@ -64,8 +64,8 @@ class User(Base):
     @staticmethod
     def find_user_equipments():
         stmt = text("SELECT Account.id, Account.name, COUNT(Equipment.id)"
-                " FROM Account, Equipment"
-                " WHERE Equipment.account_id = Account.id"
+                " FROM Account LEFT JOIN Equipment"
+                " ON Equipment.account_id = Account.id"
                 " GROUP BY Account.id")
         res = db.engine.execute(stmt)
 
